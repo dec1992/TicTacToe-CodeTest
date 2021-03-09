@@ -3,6 +3,8 @@ var boxes = [],
     score,
     moves;
 
+// Create the game grid
+
 function init() {
     var boarder = document.createElement('table');
     boarder.classList.add('boarder');
@@ -28,6 +30,8 @@ function init() {
         }
     }
 
+    // Set initial game state
+
     document.getElementById('game').appendChild(boarder);
     score = {'X': 0,'O': 0};
     moves = 0;
@@ -36,6 +40,8 @@ function init() {
         square.innerHTML = '&nbsp;';
     });
 }
+
+// Check for win condition:
 
 function condition(clicked) {
     var memberOf = clicked.className.split(/\s+/);
@@ -49,6 +55,8 @@ function condition(clicked) {
     return false;
 }
 
+// Takes all elements in row/column/diagonal and returns those with matching inner text (X/O)
+
 function contains(selector, text) {
     var elements = document.querySelectorAll(selector);
     return [].filter.call(elements, function (element) {       
@@ -56,13 +64,23 @@ function contains(selector, text) {
     });
 }
 
+// Handles each click
+
 function set() {
+
+    //  Check tile isn't already clicked
+
     if (this.innerHTML !== '&nbsp;') {
         return;
     }
+
+    // Move game state on per turn
+
     this.innerHTML = turn;
     moves += 1;
-    console.log(score)
+
+    // Check for win
+
     if (condition(this)) {
         alert('Winner: Player ' + turn);
         score[turn] += 1;
@@ -73,6 +91,9 @@ function set() {
         boxes.forEach(function (square) {
             square.innerHTML = '&nbsp;';
         });
+
+    // Check for draw
+
     } else if (moves === 9) {
         alert('Draw');
         moves = 0;
@@ -80,6 +101,9 @@ function set() {
         boxes.forEach(function (square) {
             square.innerHTML = '&nbsp;';
         });
+
+    // Update which player's turn
+    
     } else {
         turn = turn === 'X' ? 'O' : 'X';
         document.getElementById('turn').textContent = 'Player ' + turn + `'s Turn`;
