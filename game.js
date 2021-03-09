@@ -5,8 +5,7 @@ var boxes = [],
 
 function init() {
     var boarder = document.createElement('table');
-    boarder.setAttribute('border', 1);
-    boarder.setAttribute('cellspacing', 0);
+    boarder.classList.add('boarder');
 
     var identifier = 1;
     for (var i = 0; i < 3; i++) {
@@ -14,10 +13,6 @@ function init() {
         boarder.appendChild(row);
         for (var j = 0; j < 3; j++) {
             var box = document.createElement('td');
-            box.setAttribute('height', 120);
-            box.setAttribute('width', 120);
-            box.setAttribute('align', 'center');
-            box.setAttribute('valign', 'center');
             box.classList.add('col' + j, 'row' + i);
             if (i == j) {
                 box.classList.add('diagonal0');
@@ -87,7 +82,7 @@ function set() {
         });
     } else {
         turn = turn === 'X' ? 'O' : 'X';
-        document.getElementById('turn').textContent = 'Player ' + turn;
+        document.getElementById('turn').textContent = 'Player ' + turn + `'s Turn`;
     }
 }
 
