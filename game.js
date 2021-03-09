@@ -29,7 +29,7 @@ function init() {
             box.addEventListener('click', set);
             row.appendChild(box);
             boxes.push(box);
-            identifier += identifier;
+            identifier += 1;
         }
     }
 
@@ -46,7 +46,7 @@ function condition(clicked) {
     var memberOf = clicked.className.split(/\s+/);
     for (var i = 0; i < memberOf.length; i++) {
         var testClass = '.' + memberOf[i];
-        var items = contains('#board ' + testClass, turn);
+        var items = contains(testClass, turn);
         if (items.length == 3) {
             return true;
         }
@@ -56,7 +56,7 @@ function condition(clicked) {
 
 function contains(selector, text) {
     var elements = document.querySelectorAll(selector);
-    return [].filter.call(elements, function (element) {
+    return [].filter.call(elements, function (element) {       
         return RegExp(text).test(element.textContent);
     });
 }
@@ -67,18 +67,19 @@ function set() {
     }
     this.innerHTML = turn;
     moves += 1;
-    score[turn] += this.identifier;
+    console.log(score)
     if (condition(this)) {
         alert('Winner: Player ' + turn);
-        score = {'X': 0,'O': 0};
+        score[turn] += 1;
+        document.getElementById('score-x').textContent = score.X
+        document.getElementById('score-o').textContent = score.O
         moves = 0;
         turn = 'X';
         boxes.forEach(function (square) {
             square.innerHTML = '&nbsp;';
         });
-    } else if (moves === 8) {
+    } else if (moves === 9) {
         alert('Draw');
-        score = {'X': 0,'O': 0};
         moves = 0;
         turn = 'X';
         boxes.forEach(function (square) {
