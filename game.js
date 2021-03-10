@@ -9,7 +9,6 @@ function init() {
     var boarder = document.createElement('table');
     boarder.classList.add('boarder');
 
-    var identifier = 1;
     for (var i = 0; i < 3; i++) {
         var row = document.createElement('tr');
         boarder.appendChild(row);
@@ -22,11 +21,9 @@ function init() {
             if (j == 3 - i - 1) {
                 box.classList.add('diagonal1');
             }
-            box.identifier = identifier;
             box.addEventListener('click', set);
             row.appendChild(box);
             boxes.push(box);
-            identifier += 1;
         }
     }
 
@@ -34,11 +31,7 @@ function init() {
 
     document.getElementById('game').appendChild(boarder);
     score = {'X': 0,'O': 0};
-    moves = 0;
-    turn = 'X';
-    boxes.forEach(function (square) {
-        square.innerHTML = '&nbsp;';
-    });
+    reset()
 }
 
 // Check for win condition:
@@ -64,6 +57,16 @@ function contains(selector, text) {
     });
 }
 
+// Resets the game
+
+function reset() {
+    moves = 0;
+    turn = 'X';
+    boxes.forEach(function (square) {
+        square.innerHTML = '&nbsp;';
+    });
+}
+
 // Handles each click
 
 function set() {
@@ -86,21 +89,13 @@ function set() {
         score[turn] += 1;
         document.getElementById('score-x').textContent = score.X
         document.getElementById('score-o').textContent = score.O
-        moves = 0;
-        turn = 'X';
-        boxes.forEach(function (square) {
-            square.innerHTML = '&nbsp;';
-        });
+        reset()
 
     // Check for draw
 
     } else if (moves === 9) {
         alert('Draw');
-        moves = 0;
-        turn = 'X';
-        boxes.forEach(function (square) {
-            square.innerHTML = '&nbsp;';
-        });
+        reset()
 
     // Update which player's turn
     
